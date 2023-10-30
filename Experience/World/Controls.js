@@ -383,6 +383,8 @@ export default class Controls {
         this.miniPlatformTimeline.add(this.heighth, "-=0.1");
       }
     );
+
+    
   }
 
   resize() {}

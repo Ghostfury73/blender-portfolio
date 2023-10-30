@@ -1,7 +1,10 @@
 import * as THREE from "three";
 import GSAP from "gsap";
+import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
 
 import Experience from "../Experience";
+import World from "./World";
+import Theme from "../Theme";
 
 export default class Room {
   constructor() {
@@ -10,6 +13,7 @@ export default class Room {
     this.resources = this.experience.resources;
     this.room = this.resources.items.room;
     this.roomModel = this.room.scene;
+    
     this.roomChildren = {};
 
     this.lerp = {
@@ -37,18 +41,49 @@ export default class Room {
       // reset default
       if (child.name === "DecoExt") {
         child.position.y -= 0.1;
+        
       }
+      
 
       if (child.name === "MiniFloor") {
         child.position.x = -0.127146;
         child.position.z = 1.89073;
+
+       
+
+        
+        
       }
 
       if (child.name === "Computers") {
         child.children[1].material = new THREE.MeshBasicMaterial({
             map: this.resources.items.screen,
         });
+
+        const width = 0.9;
+        const height = 0.3;
+        const intensity = 2;
+        const rectLight = new THREE.RectAreaLight(
+            0xffffff,
+            intensity,
+            width,
+            height,
+        );
+        rectLight.position.set(0.3,1.5,-1);
+        
+        rectLight.rotateY(2.4)
+        
+    
+        this.roomModel.add(rectLight);
+        this.roomChildren["rectLight"] = rectLight;
+
+
+        // const rectLightHelper = new RectAreaLightHelper(rectLight);
+        // rectLight.add(rectLightHelper);
+        // console.log(this.room);
+        
     }
+    
 
       if (sessionStorage.getItem("visited")) {
         if (
@@ -76,6 +111,11 @@ export default class Room {
       this.roomChildren[child.name.toLowerCase()] = child;
     });
 
+
+
+        
+
+
     this.scene.add(this.roomModel);
     this.roomModel.scale.set(0.5, 0.5, 0.5);
   }
@@ -100,5 +140,17 @@ export default class Room {
     );
 
     this.roomModel.rotation.y = this.lerp.target;
+  }
+
+
+  switchTheme(theme){
+    if(theme==="dark"){
+      const light = new THREE.PointLight( 0xff0000, 1, 100 );
+    light.position.set(-1.31742,0.28857,2.21327 );
+    this.roomModel.add( light );
+
+    const lighthelper = new THREE.PointLightHelper(light);
+    this.roomModel.add(lighthelper);
+    }
   }
 }
