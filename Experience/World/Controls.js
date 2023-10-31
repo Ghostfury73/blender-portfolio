@@ -186,7 +186,7 @@ export default class Controls {
               trigger: ".first",
               start: "top top",
               end: "bottom bottom",
-              scrub: 0.6,
+              scrub: 1,
               invalidateOnRefresh: true,
             },
           }).to(this.room.scale, {
@@ -201,7 +201,7 @@ export default class Controls {
               trigger: ".second",
               start: "top top",
               end: "bottom bottom",
-              scrub: 3,
+              scrub: 1,
               invalidateOnRefresh: true,
             },
           }).to(this.room.scale, {
@@ -216,7 +216,7 @@ export default class Controls {
               trigger: ".third",
               start: "top top",
               end: "bottom bottom",
-              scrub: 0.6,
+              scrub: 1,
               invalidateOnRefresh: true,
             },
           }).to(this.camera.orthographicCamera.position, {
@@ -280,7 +280,7 @@ export default class Controls {
               trigger: section,
               start: "top top",
               end: "bottom bottom",
-              scrub: 0.4,
+              scrub: 0.6,
               pin: this.progressWrapper,
               pinSpacing: false,
             },
