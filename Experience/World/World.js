@@ -9,6 +9,7 @@ import { EventEmitter } from "events";
 
 export default class World extends EventEmitter {
     constructor() {
+        
         super();
         this.experience = new Experience();
         this.sizes = this.experience.sizes;

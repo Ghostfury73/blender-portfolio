@@ -13,25 +13,51 @@ export default class Floor {
 
   setFloor() {
     this.geometry = new THREE.PlaneGeometry(100, 100);
-    this.material = new THREE.MeshStandardMaterial({
-      color: "#9F9F9F",
-    });
-    this.plane = new THREE.Mesh(this.geometry, this.material);
-    this.scene.add(this.plane);
-    this.plane.rotation.x = -Math.PI / 2;
-    this.plane.position.y = -0.05;
-    this.plane.receiveShadow = true;
+        this.material = new THREE.MeshStandardMaterial({
+            color: 0xffe6a2,
+            side: THREE.BackSide,
+        });
+        this.plane = new THREE.Mesh(this.geometry, this.material);
+        this.scene.add(this.plane);
+        this.plane.rotation.x = Math.PI / 2;
+        this.plane.position.y = -0.3;
+        this.plane.receiveShadow = true;
   }
 
   setCircles() {
-    this.circleGeometry = new THREE.CircleGeometry(5, 64);
-    this.circleMaterial = new THREE.MeshStandardMaterial({ color: "#565656" });
-    this.circle = new THREE.Mesh(this.circleGeometry, this.circleMaterial);
-    this.circle.position.y = -0.048;
-    this.circle.scale.set(0, 0, 0);
-    this.circle.rotation.x = -Math.PI / 2;
-    this.circle.receiveShadow = true;
-    this.scene.add(this.circle);
+    const geometry = new THREE.CircleGeometry(5, 64);
+        const material = new THREE.MeshStandardMaterial({ color:  0xF40F0F });
+        const material2 = new THREE.MeshStandardMaterial({ color: 0x4D74E5 });
+        const material3 = new THREE.MeshStandardMaterial({ color: 0x12F67F });
+
+        this.circleFirst = new THREE.Mesh(geometry, material);
+        this.circleSecond = new THREE.Mesh(geometry, material2);
+        this.circleThird = new THREE.Mesh(geometry, material3);
+
+        this.circleFirst.position.y = -0.29;
+
+        this.circleSecond.position.y = -0.28;
+        this.circleSecond.position.x = 2;
+
+        this.circleThird.position.y = -0.27;
+
+        this.circleFirst.scale.set(0, 0, 0);
+        this.circleSecond.scale.set(0, 0, 0);
+        this.circleThird.scale.set(0, 0, 0);
+
+        this.circleFirst.rotation.x =
+            this.circleSecond.rotation.x =
+            this.circleThird.rotation.x =
+                -Math.PI / 2;
+
+        this.circleFirst.receiveShadow =
+            this.circleSecond.receiveShadow =
+            this.circleThird.receiveShadow =
+                true;
+
+        this.scene.add(this.circleFirst);
+        this.scene.add(this.circleSecond);
+        this.scene.add(this.circleThird);
   }
 
   resize() {}

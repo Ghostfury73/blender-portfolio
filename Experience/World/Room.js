@@ -4,7 +4,7 @@ import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHel
 
 import Experience from "../Experience";
 import World from "./World";
-import Theme from "../Theme";
+import Theme from "../Theme.js";
 
 export default class Room {
   constructor() {
@@ -13,7 +13,6 @@ export default class Room {
     this.resources = this.experience.resources;
     this.room = this.resources.items.room;
     this.roomModel = this.room.scene;
-    
     this.roomChildren = {};
 
     this.lerp = {
@@ -24,8 +23,66 @@ export default class Room {
 
     this.setModel();
     this.onMouseMove();
+
+    // Check the current theme
+    this.theme = this.experience.theme;
+    this.isDarkTheme = this.theme.theme === "dark";
+    
+    this.theme.on("switch", (theme) => this.onThemeSwitch(theme));
+
+    // if (this.isDarkTheme) {
+    //   this.addLightSource();
+    // }
   }
 
+  /*------------------------LS------------------------ */
+  onThemeSwitch(theme) {
+    this.isDarkTheme = theme === "dark";
+    if (this.isDarkTheme) {
+      this.addLightSource();
+    } else {
+      this.removeLightSource();
+    }
+  }
+
+  addLightSource() {
+    const width = 1.8;
+    const height = 0.5;
+    const intensity = 1;
+    const power = 4;
+
+    const rectLight = new THREE.RectAreaLight(
+      0xAF2AE4,
+      power,
+      // intensity,
+      width,
+      height,
+    );
+    rectLight.position.set(0.3, 1.5, -1);
+    rectLight.rotateY(2.4);
+
+    this.roomModel.add(rectLight);
+    this.roomChildren["rectLight"] = rectLight;
+
+    // const rectLightHelper = new RectAreaLightHelper(rectLight);
+    // rectLight.add(rectLightHelper);
+  }
+
+  removeLightSource() {
+    if (this.roomChildren["rectLight"]) {
+      this.roomModel.remove(this.roomChildren["rectLight"]);
+      delete this.roomChildren["rectLight"];
+    }
+  }
+
+
+
+
+
+
+
+
+  
   setModel() {
     this.roomModel.children.forEach((child) => {
       child.castShadow = true;
@@ -60,27 +117,15 @@ export default class Room {
             map: this.resources.items.screen,
         });
 
-        const width = 0.9;
-        const height = 0.3;
-        const intensity = 2;
-        const rectLight = new THREE.RectAreaLight(
-            0xffffff,
-            intensity,
-            width,
-            height,
-        );
-        rectLight.position.set(0.3,1.5,-1);
         
-        rectLight.rotateY(2.4)
+
+      
+        // Add or remove the RectAreaLight based on the theme
         
-    
-        this.roomModel.add(rectLight);
-        this.roomChildren["rectLight"] = rectLight;
 
+        
 
-        // const rectLightHelper = new RectAreaLightHelper(rectLight);
-        // rectLight.add(rectLightHelper);
-        // console.log(this.room);
+        
         
     }
     
@@ -143,14 +188,4 @@ export default class Room {
   }
 
 
-  switchTheme(theme){
-    if(theme==="dark"){
-      const light = new THREE.PointLight( 0xff0000, 1, 100 );
-    light.position.set(-1.31742,0.28857,2.21327 );
-    this.roomModel.add( light );
-
-    const lighthelper = new THREE.PointLightHelper(light);
-    this.roomModel.add(lighthelper);
-    }
-  }
 }

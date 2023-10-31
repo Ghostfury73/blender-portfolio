@@ -284,7 +284,7 @@ circle:nth-child(3){
 }
 
 .page .page-wrapper .section-margin {
-  height: 1000px;
+  height: 3000px;
   width: 100%;
 }
 
@@ -601,15 +601,9 @@ circle:nth-child(3){
   }
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
-.hide-scrollbar
-{
-    overflow: auto;
-    -ms-overflow-style: none; /* IE 11 */
-    scrollbar-width:inherit;
-}
+} */
 
 
 
