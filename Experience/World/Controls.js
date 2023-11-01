@@ -204,11 +204,28 @@ export default class Controls {
               scrub: 1,
               invalidateOnRefresh: true,
             },
-          }).to(this.room.scale, {
-            x: 1.2,
-            y: 1.2,
-            z: 1.2,
-          });
+          })
+          
+          .to(this.room.scale, {
+            x: 1.4,
+            y: 1.4,
+            z: 1.4,
+          })
+          .to(
+            this.room.position,
+            {
+              x: () => {
+                return -this.sizes.width * 0.0009;
+              },
+              z: () => {
+                return this.sizes.height * 0.0067;
+              },
+              
+            },
+            "same"
+          )
+          
+          ;
 
           // Third section
           this.thirdMobileTimeline = new GSAP.timeline({
@@ -221,7 +238,7 @@ export default class Controls {
             },
           }).to(this.camera.orthographicCamera.position, {
             x: -1.5,
-            y: 1,
+            y: -1,
           });
         },
 
